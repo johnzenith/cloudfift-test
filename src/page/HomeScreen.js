@@ -3,7 +3,6 @@ import './HomeScreen.css';
 import logo from '../images/logo.svg';
 import heroImage from '../images/hero-image.png';
 import clsx from 'clsx';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -211,7 +210,7 @@ const useStyles = makeStyles((theme) => {
             },
             [theme.breakpoints.down('xs')]: {
                 width: '200px',
-                minWidth: '200px',
+                // minWidth: '200px',
                 minWidth: '100% !important',
             },
         },
@@ -474,7 +473,7 @@ const HomeScreen = () => {
                             <Button className={classes.getStartedBtn} variant="contained">Get started now</Button>
                         </Paper>
                     </Grid>
-                    <Grid item item xs={12} sm={12} md={7}>
+                    <Grid item xs={12} sm={12} md={7}>
                         <Paper className={clsx(classes.paper, classes.alignCenter, classes.paperOverlay)}>
                             <img className={classes.heroImage} alt="banner" src={heroImage} />
 
