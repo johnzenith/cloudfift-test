@@ -1,8 +1,8 @@
 import React from 'react';
-import './HomeScreen.css';
-import logo from '../images/logo.svg';
+import './LandingPage.css';
 import heroImage from '../images/hero-image.png';
 import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,11 +23,13 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 
 import Hidden from '@material-ui/core/Hidden';
 
+import Logo          from '../components/Image/Logo';
+import RootContainer from '../components/Container/RootContainer';
+
 const useStyles = makeStyles((theme) => {
     
     return {
         root: {
-            flexGrow: 1,
             marginTop: '45px',
 
             [theme.breakpoints.down('sm')]: {
@@ -47,6 +49,9 @@ const useStyles = makeStyles((theme) => {
             // background: 'linear-gradient(59.63deg, rgba(207, 170, 143, 0.702) 7.65%, rgba(205, 161, 64, 0) 85.58%, rgba(205, 160, 57, 0) 92.35%)',
             // opacity: 0.6,
             // transform: 'matrix(0.97, -0.24, 0.25, 0.97, 0, 0)',
+        },
+        link: {
+            textDecoration: 'none',
         },
         alignCenter: {
             textAlign: 'center',
@@ -448,17 +453,17 @@ const useStyles = makeStyles((theme) => {
     };
   });
   
-const HomeScreen = () => {
+const LandingPage = () => {
     const classes = useStyles();
 
     return (
         <div className="homeScreen">
-            <div className={classes.root}>
+            <RootContainer className={classes.root}>
                 <Grid container spacing={0}>
                     <Grid item xs={12} sm={12} md={5}>
                         <Paper className={classes.paper}>
                             <div className={classes.logoWrapper}>
-                                <img className={classes.logo} alt="logo" src={logo} />
+                                <Logo className={classes.logo} />
                             </div>
 
                             <Typography component="h1" className={classes.tagline}>
@@ -479,11 +484,16 @@ const HomeScreen = () => {
 
                             <Hidden smDown>
                                 <div className={classes.navButtons}>
-                                    <Button className={clsx(classes.getStartedBtn, classes.loginBtn)} variant="contained">Login</Button>
-                                    <Button className={classes.getStartedBtn} variant="contained">Signup</Button>
+                                    <Link to="/login" className={classes.link}>
+                                        <Button className={clsx(classes.getStartedBtn, classes.loginBtn)} variant="contained">
+                                            Login
+                                        </Button>
+                                    </Link>
+                                    <Link to="/signup" className={classes.link}>
+                                        <Button className={classes.getStartedBtn} variant="contained">Signup</Button>
+                                    </Link>
                                 </div>
                             </Hidden>
-
                         </Paper>
                     </Grid>
                 </Grid>
@@ -596,6 +606,7 @@ const HomeScreen = () => {
                     </Grid>
                 </Container>
 
+
                 {/* Footer */}
                 <Container className={classes.footer} maxWidth="xl">                    
                     <Grid className={classes.channelHeadingGrid} container spacing={0}>
@@ -671,9 +682,9 @@ const HomeScreen = () => {
                         </Grid>
                     </Container>
                 </Container>
-            </div>
+            </RootContainer>
         </div>        
     );
 }
 
-export default HomeScreen;
+export default LandingPage;
