@@ -13,7 +13,7 @@ import PageTitle            from '../../components/Template/Onboarding/PageTitle
 import PageOverlayGrid      from '../../components/Template/Onboarding/PageOverlayGrid';
 import AlreadyHaveAnAccount from '../../components/Template/Onboarding/AlreadyHaveAnAccount';
 
-const useStyles = makeStyles((theme) => {
+export const useStyles = makeStyles((theme) => {
     return {
         root: {
             margin: '0px auto',
@@ -104,6 +104,17 @@ const useStyles = makeStyles((theme) => {
 const LoginPage = () => {
     const classes = useStyles();
 
+    const usernameInputRef = React.createRef('');
+    const passwordInputRef = React.createRef('');
+
+    // Maybe we should not validate on page load when value is auto-filled,
+    // until the form is submitted
+    const [errorDisplay, setErrorDisplay] = React.useState(false);
+
+    const handleSubmit = () => {
+        setErrorDisplay(true);
+    };
+
     return (
         <div className="loginPage">
             <RootContainer className={classes.root}>
@@ -134,7 +145,10 @@ const LoginPage = () => {
                                         labelPlaceholder="Username"
                                         type="email"
                                         required={true}
+                                        inputRef={usernameInputRef}
+                                        errorDisplay={errorDisplay}
                                         validate={{
+                                            validateOnLoad: false,
                                             error: {
                                                 invalid: 'Username is invalid.',
                                             }
@@ -146,6 +160,8 @@ const LoginPage = () => {
                                         type="password"
                                         label="Password"
                                         required={true}
+                                        inputRef={passwordInputRef}
+                                        errorDisplay={errorDisplay}
                                         minlength={8}
                                         maxlength={90}
                                     />
@@ -154,6 +170,7 @@ const LoginPage = () => {
                                         <PrimaryButton 
                                             className={classes.loginBtn} 
                                             label="Login"
+                                            onClick={handleSubmit}
                                         />
                                         <div className={classes.forgetPasswordGrid}>
                                             <DefaultButton 

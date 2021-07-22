@@ -67,7 +67,7 @@ const validateInputField = props => (inputValue = '', e = {}) => {
     const getMaxLenFieldErrorText = () => {
         const characterText = pluralizeCharacterText(maxlength);
 
-        return (maxlength && value?.length && value?.length > maxlength) ? 
+        return (maxlength && maxlength > 0 && value?.length && value?.length > maxlength) ? 
             `${label} maximum ${characterText} is ${maxlength}.` : '';
     };
 

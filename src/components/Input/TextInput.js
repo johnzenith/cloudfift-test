@@ -73,15 +73,15 @@ const TextInput = props => {
         helperText       = null,
         placeholder      = '',
         defaultValue     = '',
+        errorDisplay     = true,
         labelPlaceholder = '',
 
+        // Validation props
         // validate = {
         //     minlength: 0,
         //     maxlength: -1,
         //     error: {
         //         invalid:   '', // invalid error text
-        //         minlength: '', // minlength error text
-        //         maxlength: '', // maxlength error text
         //     }
         // },
 
@@ -93,18 +93,45 @@ const TextInput = props => {
             className: '',
         },
 
-        inputProps      = {},
+        inputProps = {
+            autoComplete: 'on',
+        },
+
         InputProps      = {},
         InputLabelProps = {},
     } = props;
 
     const _value    = (null !== value) ? value : defaultValue;
-    const _label    = defaultValue ? '' : (labelPlaceholder || label);
+    const _label    = defaultValue     ? ''    : (labelPlaceholder || label);
     const fieldName = name || id;
 
     const [fieldLabel, setFieldLabel] = React.useState(_label);
     const [fieldError, setFieldError] = React.useState({});
     const [fieldValue, setFieldValue] = React.useState(_value);
+
+    const _error = (null !== error ) ? error : fieldError?.error;
+
+    const getInputValue = () => {
+        let elem;
+
+        if (inputRef && inputRef?.current) {
+            elem = inputRef.current;
+        } else {
+            elem = document.getElementById(id);
+        }
+
+        return elem?.value;
+    };
+
+    const handleErrors = (value, e) => {
+        const validateField = validateInputField(props)(value, e);
+        const errorText     = validateField[fieldName] || '';
+
+        setFieldError({
+            msg:   errorText,
+            error: errorText?.length ? true : false,
+        });
+    };
 
     const handleChange = e => {
         const value = e.target.value;
@@ -115,13 +142,13 @@ const TextInput = props => {
             setFieldValue(value);
         }
 
-        const validateField = validateInputField(props)(value, e);
-        const errorText     = validateField[fieldName] || '';
-
-        setFieldError({
-            msg:   errorText,
-            error: errorText?.length ? true : false,
-        });
+        if (errorDisplay) {
+            handleErrors(value, e);
+        } else {
+            if (_error) {
+                setFieldError({}); // Clear error
+            }
+        }
     };
 
     const handleClick = e => {
@@ -132,6 +159,27 @@ const TextInput = props => {
         const _label = e.target.value.length ? '' : (labelPlaceholder || label);
         setFieldLabel(_label);
     };
+
+    React.useEffect(() => {
+        // On component first mount, if the field is auto-filled,
+        // let's clear the placeholder label
+        const value = getInputValue();
+
+        if (value?.length) {
+            setFieldLabel('');
+        }
+    });
+
+    /**
+     * When error display is disabled on page load,
+     * the {errorDisplay} prop can be used to toggle it's display.
+     */
+    React.useEffect(() => {
+        if (errorDisplay) {
+            const value = getInputValue();
+            handleErrors(value);
+        }
+    }, [errorDisplay]);
 
     return (
         <FormControl 
@@ -151,7 +199,7 @@ const TextInput = props => {
                 type={type}
                 label={fieldLabel}
                 value={fieldValue}
-                error={(null !== error ) ? error : fieldError?.error}
+                error={_error}
                 variant={variant}
                 inputRef={inputRef}
                 required={required}

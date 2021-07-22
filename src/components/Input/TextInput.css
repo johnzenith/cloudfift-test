@@ -1,3 +1,20 @@
 .MuiTextField-root {
-    background: 'red !important';
+    border: none !important;
+}
+
+.MuiOutlinedInput-root {
+    border: none !important;
+    border-color: #CFD8EA !important;
+}
+
+.MuiOutlinedInput-root:hover {
+    border-color: #152144;
+}
+
+.MuiOutlinedInput-notchedOutline {
+    /* border: none !important; */
+}
+
+.MuiOutlinedInput-notchedOutline:hover {
+    border-color: #002058  !important;
 }
