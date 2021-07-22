@@ -101,7 +101,7 @@ const PageOverlayGrid = () => {
                 </Paper>
             </Hidden>
 
-            <Hidden smUp>
+            <Hidden mdUp>
                 <Logo className={classes.logo} />
             </Hidden>
         </Grid>

@@ -168,7 +168,7 @@ const TextInput = props => {
         if (value?.length) {
             setFieldLabel('');
         }
-    });
+    }, [getInputValue]);
 
     /**
      * When error display is disabled on page load,

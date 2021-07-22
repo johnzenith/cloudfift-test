@@ -150,7 +150,7 @@ const LoginPage = () => {
                                         validate={{
                                             validateOnLoad: false,
                                             error: {
-                                                invalid: 'Username is invalid.',
+                                                invalid: 'Username is invalid. Hint: use your registered email address.',
                                             }
                                         }}
                                     />
