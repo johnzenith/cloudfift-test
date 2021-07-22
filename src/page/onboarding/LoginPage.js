@@ -1,21 +1,19 @@
-import React from 'react';
-import './LoginPage.css';
-import clsx from 'clsx';
-import Typography from '@material-ui/core/Typography';
+import React          from 'react';
+import clsx           from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import Paper          from '@material-ui/core/Paper';
+import Grid           from '@material-ui/core/Grid';
 
-import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
+import TextField      from '@material-ui/core/TextField';
+import FormControl    from '@material-ui/core/FormControl';
 
-import Hidden from '@material-ui/core/Hidden';
-
-import Logo          from '../../components/Image/Logo';
-import LogoText      from '../../components/Image/LogoText';
-import DefaultButton from '../../components/Button/DefaultButton';
-import PrimaryButton from '../../components/Button/PrimaryButton';
-import RootContainer from '../../components/Container/RootContainer';
+// Components
+import DefaultButton        from '../../components/Button/DefaultButton';
+import PrimaryButton        from '../../components/Button/PrimaryButton';
+import RootContainer        from '../../components/Container/RootContainer';
+import PageTitle            from '../../components/Template/Onboarding/PageTitle';
+import PageOverlayGrid      from '../../components/Template/Onboarding/PageOverlayGrid';
+import AlreadyHaveAnAccount from '../../components/Template/Onboarding/AlreadyHaveAnAccount';
 
 const useStyles = makeStyles((theme) => {
     const firaSansFont = 'Fira Sans, sans-serif';
@@ -38,117 +36,12 @@ const useStyles = makeStyles((theme) => {
             boxShadow: 'none',
             borderRadius: 0,
         },
-        brandingPaper: {
-            width: '100%',
-            // background: 'url(people.png) #002058e0',
-            background: 'url(people.png)',
-            // background: 'url(people.png) #042f77d9',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-            objectFit: 'cover',
-            // backgroundBlendMode: 'multiply',
-            opacity: 1,
-        },
         formPaper: {
             minHeight: '125vh',
 
             [theme.breakpoints.down('sm')]: {
                 minHeight: '110vh',
             },
-        },
-        overlay: {
-            content: '" "',
-            position: 'absolute',
-            left: '-7px',
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: '50vw',
-            minHeight: '135vh',
-            background: '#002058',
-            opacity: .8,
-        },
-        logo: {
-            position: 'absolute',
-            top: '47px',
-            left: '78px',
-            zIndex: 9999,
-            
-            [theme.breakpoints.down('sm')]: {
-                position: 'relative',
-                top: '20px',
-                left: '20px',
-            },
-        },
-        welcomeTextWrapper: {
-            top: '55vh',
-        },
-        welcomeText: {
-            color: '#fff',
-            display: 'block',
-            fontFamily: firaSansFont,
-        },
-        welcomeTextFirstLine: {
-            fontSize: '28px',
-            lineHeight: '130%',
-            opacity: .7,
-        },
-        welcomeTextSecondLine: {
-            fontSize: '50px',
-            fontWeight: 'bold',
-        },
-        alreadyHaveAccount: {
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: '54px',
-
-            [theme.breakpoints.down('sm')]: {
-                padding: '0px 10px',
-            },
-
-            [theme.breakpoints.down('xs')]: {
-                flexDirection: 'column',
-            }
-        },
-        alreadyHaveAccountText: {
-            fontFamily: firaSansFont,
-            fontSize: '16px',
-            opacity: .5,
-            color: '#002058',
-            fontWeight: 600,
-            lineHeight: '19px',
-
-            [theme.breakpoints.down('xs')]: {
-                marginBottom: '10px',
-            }
-        },
-        signupBtn: {
-            width: '145px',
-            height: '45px',
-            background: '#fff',
-            color: '#182538',
-            boxShadow: '0px 5px 20px rgba(24, 37, 56, 0.1)',
-            fontFamily: firaSansFont,
-            fontWeight: 600,
-            fontSize: '14px',
-            lineHeight: '16.8px',
-            textAlign: 'center',
-            textTransform: 'capitalize',
-            marginLeft: '23px',
-
-            '&:hover': {
-                background: '#fff',
-                color: '#182538',
-            },
-
-            [theme.breakpoints.down('sm')]: {
-                width: '130px',
-            },
-
-            [theme.breakpoints.down('xs')]: {
-                marginLeft: '0px',
-            }
         },
         pageActionWrapper: {
             marginTop: '135px',
@@ -165,24 +58,6 @@ const useStyles = makeStyles((theme) => {
             [theme.breakpoints.down('sm')]: {
                 marginTop: '50px',
             },
-        },
-        pageTitle: {
-            fontFamily: firaSansFont,
-            fontWeight: 'bold',
-            fontSize: '38px',
-            lineHeight: '130%',
-            display: 'flex',
-            alignItems: 'flex-end',
-            color: '#002058',
-            marginBottom: '5px',
-        },
-        pageInstruction: {
-            fontWeight: 500,
-            fontSize: '16px',
-            lineHeight: '140%',
-            opacity: .4,
-            marginBottom: '34px',
-            maxWidth: '269px',
         },
         formWrapper: {
             display: 'flex',
@@ -291,43 +166,28 @@ const LoginPage = () => {
         <div className="loginPage">
             <RootContainer className={classes.root}>
                 <Grid container spacing={0}>
-                    <Grid item xs={12} sm={12} md={6}>
-                        <Hidden smDown>
-                            <Paper className={clsx(classes.paper, classes.brandingPaper)}>
-                                <div className={classes.overlay}></div>
-                                <LogoText className={classes.logo} />
+                    <PageOverlayGrid />
 
-                                <Typography component="h2" className={clsx(classes.logo, classes.welcomeTextWrapper)}>
-                                    <span className={clsx(classes.welcomeText, classes.welcomeTextFirstLine)}>Welcome to:</span>
-                                    <strong className={clsx(classes.welcomeText, classes.welcomeTextSecondLine)}>SFS Capital</strong>
-                                </Typography>
-                            </Paper>
-                        </Hidden>
-
-                        <Hidden smUp>
-                            <Logo className={classes.logo} />
-                        </Hidden>
-                    </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                         <Paper className={clsx(classes.paper, classes.formPaper)}>
-                            <Typography component="h2" className={classes.alreadyHaveAccount}>
-                                <span className={classes.alreadyHaveAccountText}>Already have an account?</span>
-                                <DefaultButton 
-                                    label="Signup"
-                                    className={classes.signupBtn}
-                                    linkTo="/signup"
-                                />
-                            </Typography>
+                            <AlreadyHaveAnAccount 
+                                buttonProps={{
+                                    label:  'Signup',
+                                    linkTo: '/signup',
+                                }}
+                            />
 
                             <div className={classes.pageActionWrapper}>
                                 <form className={classes.formWrapper} autoComplete="off">
-                                    <Typography component="h2" className={classes.pageTitle}>Login</Typography>
-                                    <Typography component="p" className={clsx(classes.pageTitle, classes.pageInstruction)}>
-                                        Sign in with your username or email and password
-                                    </Typography>
+                                    <PageTitle
+                                        label="Login"
+                                        pageDescription={{
+                                            label: 'Sign in with your username or email and password'
+                                        }}
+                                    />
 
                                     <FormControl variant="outlined" className={classes.formControl}>
-                                        <label id="username" className={classes.inputLabel}>Username:</label>
+                                        <label htmlFor="username" className={classes.inputLabel}>Username:</label>
                                         <TextField
                                             id="username"
                                             label="Username"
@@ -353,7 +213,7 @@ const LoginPage = () => {
                                     </FormControl>
 
                                     <FormControl variant="outlined" className={classes.formControl}>
-                                        <label id="password" className={classes.inputLabel}>Password</label>
+                                        <label htmlFor="password" className={classes.inputLabel}>Password</label>
                                         <TextField
                                             id="password"
                                             type="password"

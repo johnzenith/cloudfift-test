@@ -27,7 +27,6 @@ import Logo          from '../components/Image/Logo';
 import RootContainer from '../components/Container/RootContainer';
 
 const useStyles = makeStyles((theme) => {
-    
     return {
         root: {
             marginTop: '45px',
@@ -523,7 +522,6 @@ const LandingPage = () => {
                             <TextField 
                                 className={clsx(classes.productInput, classes.formControl, classes.formcontrolFluid)}
                                 style={{minWidth: '280px'}} 
-                                id="outlined-search" 
                                 label="How much do want to invest?" 
                                 type="text" 
                                 variant="outlined" 

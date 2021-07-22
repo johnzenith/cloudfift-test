@@ -20,31 +20,32 @@ import {
 function App() {
     const [{ user }] = useStateValue();
 
-    const GlobalRoutes = () => (
-        <Switch>
-            <Route exact path="/forgot-password" component={ForgotPasswordPage} />
-            <Route exact path="/signup"          component={SignupPage} />
-            <Route exact path="/login"           component={LoginPage} />
-            <Route exact path="/"                component={LandingPage} />
-            <Route
-                render={() => <Redirect to="/" />}
-              />
-        </Switch>
-    );
+    const GlobalRoutes = () => {
+        return (
+            <Switch>
+                <Route exact path="/forgot-password" component={ForgotPasswordPage} />
+                <Route exact path="/signup"          component={SignupPage} />
+                <Route exact path="/login"           component={LoginPage} />
+                <Route exact path="/"                component={LandingPage} />
+                <Route
+                    render={() => <Redirect to="/" />}
+                />
+            </Switch>
+        );
+    };
 
     return (
         <div className="app">
             <Router>
                 {!user ? 
-                    (<GlobalRoutes />)
+                    <GlobalRoutes />
                     : 
-                    (<div className="app__dashboard">
-                        <Switch>
-                            <Route path="/dashboard" component={Dashboard} />
-
-                            <Route render={() => <Redirect to="/dashboard" />} />
-                        </Switch>
-                    </div>)
+                    (<Switch>
+                        <Route exact path="/dashboard" component={Dashboard} />
+                        <Route 
+                            render={() => <Redirect to="/dashboard" />}
+                        />
+                    </Switch>)
                 }
             </Router>
         </div>
