@@ -1,8 +1,12 @@
 import React          from 'react';
+import './TextInput.css';
 import clsx           from 'clsx';
 import TextField      from '@material-ui/core/TextField';
 import FormControl    from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
+
+// Helpers
+import validateInputField from '../../helpers/validateInputField';
 
 const useStyles = makeStyles((theme) => {
     const firaSansFont = 'Fira Sans, sans-serif';
@@ -56,16 +60,30 @@ const TextInput = props => {
     const classes = useStyles();
 
     const {
-        id          = '',
-        type        = 'text',
-        name        = '',
-        label       = 'Label',
-        value       = '',
-        variant     = 'outlined',
-        onChange    = (() => {}),
-        inputRef    = null,
-        required    = false,
-        placeholder = '',
+        id               = '',
+        type             = 'text',
+        name             = '',
+        label            = 'Label',
+        error            = null,
+        value            = null,
+        variant          = 'outlined',
+        onChange         = null,
+        inputRef         = null,
+        required         = false,
+        helperText       = null,
+        placeholder      = '',
+        defaultValue     = '',
+        labelPlaceholder = '',
+
+        // validate = {
+        //     minlength: 0,
+        //     maxlength: -1,
+        //     error: {
+        //         invalid:   '', // invalid error text
+        //         minlength: '', // minlength error text
+        //         maxlength: '', // maxlength error text
+        //     }
+        // },
 
         formControlProps = {
             className: '',
@@ -77,9 +95,43 @@ const TextInput = props => {
 
         inputProps      = {},
         InputProps      = {},
-        FormHelperText  = {},
         InputLabelProps = {},
     } = props;
+
+    const _value    = (null !== value) ? value : defaultValue;
+    const _label    = defaultValue ? '' : (labelPlaceholder || label);
+    const fieldName = name || id;
+
+    const [fieldLabel, setFieldLabel] = React.useState(_label);
+    const [fieldError, setFieldError] = React.useState({});
+    const [fieldValue, setFieldValue] = React.useState(_value);
+
+    const handleChange = e => {
+        const value = e.target.value;
+
+        if (onChange) {
+            onChange(value, e);
+        } else {
+            setFieldValue(value);
+        }
+
+        const validateField = validateInputField(props)(value, e);
+        const errorText     = validateField[fieldName] || '';
+
+        setFieldError({
+            msg:   errorText,
+            error: errorText?.length ? true : false,
+        });
+    };
+
+    const handleClick = e => {
+        setFieldLabel('');
+    };
+
+    const handleBlur = e => {
+        const _label = e.target.value.length ? '' : (labelPlaceholder || label);
+        setFieldLabel(_label);
+    };
 
     return (
         <FormControl 
@@ -90,24 +142,30 @@ const TextInput = props => {
                 htmlFor={id} 
                 className={clsx(classes.inputLabel, labelProps.className || '')}
             >
-                {label}
+                {label || labelPlaceholder}
             </label>
 
             <TextField
                 id={id}
-                name={name}
+                name={fieldName}
                 type={type}
-                label={label}
-                value={value}
+                label={fieldLabel}
+                value={fieldValue}
+                error={(null !== error ) ? error : fieldError?.error}
                 variant={variant}
                 inputRef={inputRef}
                 required={required}
                 fullWidth={true}
+                helperText={(null !== helperText) ? helperText : fieldError?.msg}
                 placeholder={placeholder}
 
-                onChange={onChange}
-                inputProps={{...inputProps}}
-                FormHelperText={{...FormHelperText}}
+                onChange={handleChange}
+
+                inputProps={{
+                    onBlur: handleBlur,
+                    onClick: handleClick,
+                    ...inputProps
+                }}
 
                 InputProps={{
                     classes: {
@@ -125,9 +183,9 @@ const TextInput = props => {
                     },
                     ...InputLabelProps
                 }}
-                
-                onChange={() => {}}
             />
         </FormControl>
     );
 };
+
+export default TextInput;
