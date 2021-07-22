@@ -111,7 +111,7 @@ const TextInput = props => {
 
     const _error = (null !== error ) ? error : fieldError?.error;
 
-    const getInputValue = () => {
+    const getInputValue = React.useCallback(() => {
         let elem;
 
         if (inputRef && inputRef?.current) {
@@ -121,9 +121,9 @@ const TextInput = props => {
         }
 
         return elem?.value;
-    };
+    }, [inputRef, id]);
 
-    const handleErrors = (value, e) => {
+    const handleErrors = React.useCallback((value, e = {}) => {
         const validateField = validateInputField(props)(value, e);
         const errorText     = validateField[fieldName] || '';
 
@@ -131,7 +131,7 @@ const TextInput = props => {
             msg:   errorText,
             error: errorText?.length ? true : false,
         });
-    };
+    }, [fieldName, props]);
 
     const handleChange = e => {
         const value = e.target.value;
@@ -160,26 +160,36 @@ const TextInput = props => {
         setFieldLabel(_label);
     };
 
-    React.useEffect(() => {
-        // On component first mount, if the field is auto-filled,
-        // let's clear the placeholder label
+    const handleInputLabelDisplayOnMount = React.useCallback(() => {
         const value = getInputValue();
-
         if (value?.length) {
+            // inputRef.current.click(); // this will work as well
             setFieldLabel('');
         }
     }, [getInputValue]);
+
+    const handleErrorDisplayOnMount = React.useCallback(() => {
+        if (errorDisplay) {
+            const value = getInputValue();
+            handleErrors(value);
+        }
+    }, [getInputValue, handleErrors, errorDisplay]);
+
+    React.useEffect(() => {
+        // On component first mount, if the field is auto-filled,
+        // let's clear the placeholder label
+        setTimeout(function () {
+            handleInputLabelDisplayOnMount();
+        }, 500);
+    }, [handleInputLabelDisplayOnMount]);
 
     /**
      * When error display is disabled on page load,
      * the {errorDisplay} prop can be used to toggle it's display.
      */
     React.useEffect(() => {
-        if (errorDisplay) {
-            const value = getInputValue();
-            handleErrors(value);
-        }
-    }, [errorDisplay]);
+        handleErrorDisplayOnMount();
+    }, [handleErrorDisplayOnMount]);
 
     return (
         <FormControl 
