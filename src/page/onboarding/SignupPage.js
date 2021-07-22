@@ -4,6 +4,8 @@ import Paper          from '@material-ui/core/Paper';
 import Grid           from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { useStyles as loginPageStyles } from './LoginPage';
+
 // Components
 import TextInput            from '../../components/Input/TextInput';
 import DefaultButton        from '../../components/Button/DefaultButton';
@@ -15,97 +17,50 @@ import AlreadyHaveAnAccount from '../../components/Template/Onboarding/AlreadyHa
 
 export const useStyles = makeStyles((theme) => {
     return {
-        root: {
-            margin: '0px auto',
-        },
         paper: {
-            padding: theme.spacing(0),
-            minHeight: '135vh',
-            height: 'auto',
-            width: '100%',
-            textAlign: 'left',
-            color: theme.palette.text.secondary,
-            boxShadow: 'none',
-            borderRadius: 0,
+            minHeight: '145vh',
         },
         formPaper: {
-            minHeight: '125vh',
+            minHeight: '135vh',
 
             [theme.breakpoints.down('sm')]: {
-                minHeight: '110vh',
+                minHeight: '160vh',
             },
+        },
+        overlay: {
+            minHeight: '145vh',
+        },
+        pageDescription: {
+            maxWidth: '347px',
         },
         pageActionWrapper: {
-            marginTop: '135px',
-            marginLeft: '95px',            
-
-            [theme.breakpoints.down('md')]: {
-                display: 'flex',
-                justifyContent: 'center',
-                marginLeft: '0px',
-                marginTop: '100px',
-                padding: '0px 20px',
-            },
-
-            [theme.breakpoints.down('sm')]: {
-                marginTop: '50px',
-            },
-        },
-        formWrapper: {
-            display: 'flex',
-            flexDirection: 'column',
-            maxWidth: '520px',
-            width: 'auto',
-            padding: '10px',
-
-            [theme.breakpoints.down('md')]: {
-                display: 'block',
-            },
-
-            [theme.breakpoints.down('sm')]: {
-                padding: '20px',
-            },
-        },
-        passwordInput: {
-            letterSpacing: '5px',
-        },
-        formButtonGridContainer: {
-            display: 'flex',
-            alignItems: 'center',
-            maxWidth: '520px',
-            flexGrow: 1,
-            marginTop: '10px',
-
-            [theme.breakpoints.down('sm')]: {
-                maxWidth: '100%',
-                flexDirection: 'row',
-            },
+            marginTop: '90px',
         },
         loginBtn: {
-            minWidth: '180px',
-
-            [theme.breakpoints.down('xs')]: {
-                minWidth: '150px',
-            }
+            
         },
         forgetPasswordGrid: {
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: 'flex-start',
             alignItems: 'center',
             width: '100%',
         },
         forgetPasswordBtn: {
             width: 'auto',
             padding: '0px',
+            color: '#F9A825',
         },
     }
 });
 
 const LoginPage = () => {
-    const classes = useStyles();
+    const classes     = loginPageStyles();
+    const pageClasses = useStyles();
 
-    const usernameInputRef = React.createRef('');
-    const passwordInputRef = React.createRef('');
+    const lastNameInputRef  = React.createRef('');
+    const firstNameInputRef = React.createRef('');
+    const emailInputRef     = React.createRef('');
+    const passwordInputRef  = React.createRef('');
 
     // Maybe we should not validate on page load when value is auto-filled,
     // until the form is submitted
@@ -116,43 +71,61 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="loginPage">
+        <div className="signupPage">
             <RootContainer className={classes.root}>
                 <Grid container spacing={0}>
-                    <PageOverlayGrid />
+                    <PageOverlayGrid 
+                        paper={{
+                            className: pageClasses.paper
+                        }}
+                        overlay={{
+                            className: pageClasses.overlay
+                        }}
+                    />
 
                     <Grid item xs={12} sm={12} md={6}>
-                        <Paper className={clsx(classes.paper, classes.formPaper)}>
+                        <Paper className={clsx(classes.paper, classes.formPaper, pageClasses.formPaper)}>
                             <AlreadyHaveAnAccount 
+                                label="Already have an account?"
                                 buttonProps={{
-                                    label:  'Signup',
-                                    linkTo: '/signup',
+                                    label:  'Login',
+                                    linkTo: '/login',
                                 }}
                             />
 
-                            <div className={classes.pageActionWrapper}>
-                                <form className={classes.formWrapper} autoComplete="off">
+                            <div className={clsx(classes.pageActionWrapper, pageClasses.pageActionWrapper)}>
+                                <form className={classes.formWrapper}>
                                     <PageTitle
-                                        label="Login"
+                                        label="Create an account"
                                         pageDescription={{
-                                            label: 'Sign in with your username or email and password'
+                                            label: 'Lets onboard you so we will know who you are. it will only take a minute',
+                                            className: pageClasses.pageDescription,
                                         }}
                                     />
 
                                     <TextInput
-                                        id="username"
-                                        label="Username:"
-                                        labelPlaceholder="Username"
+                                        id="firstName"
+                                        label="First Name"
+                                        required={true}
+                                        inputRef={firstNameInputRef}
+                                        errorDisplay={errorDisplay}
+                                    />
+
+                                    <TextInput
+                                        id="lastName"
+                                        label="Last Name"
+                                        required={true}
+                                        inputRef={lastNameInputRef}
+                                        errorDisplay={errorDisplay}
+                                    />
+
+                                    <TextInput
+                                        id="email"
+                                        label="Email"
                                         type="email"
                                         required={true}
-                                        inputRef={usernameInputRef}
+                                        inputRef={emailInputRef}
                                         errorDisplay={errorDisplay}
-                                        validate={{
-                                            validateOnLoad: false,
-                                            error: {
-                                                invalid: 'Username is invalid. Hint: use your registered email address.',
-                                            }
-                                        }}
                                     />
 
                                     <TextInput
@@ -166,19 +139,20 @@ const LoginPage = () => {
                                         maxlength={90}
                                     />
 
-                                    <div className={clsx(classes.formControl, classes.formButtonGridContainer)}>
-                                        <PrimaryButton 
-                                            className={classes.loginBtn} 
-                                            label="Login"
-                                            onClick={handleSubmit}
-                                        />
-                                        <div className={classes.forgetPasswordGrid}>
+                                    <div className={clsx(classes.formControl, classes.formButtonGridContainer)}>                                        
+                                        <div className={clsx(classes.forgetPasswordGrid, pageClasses.forgetPasswordGrid)}>
                                             <DefaultButton 
-                                                className={classes.forgetPasswordBtn}
-                                                label="Forget password?" 
-                                                linkTo=""
+                                                className={clsx(classes.forgetPasswordBtn, pageClasses.forgetPasswordBtn)}
+                                                label="« Previous" 
+                                                linkTo="/login"
                                             />
                                         </div>
+
+                                        <PrimaryButton 
+                                            className={clsx(classes.loginBtn, pageClasses.loginBtn)} 
+                                            label="Signup"
+                                            onClick={handleSubmit}
+                                        />
                                     </div>
                                 </form>
                             </div>                    

@@ -80,7 +80,7 @@ const AlreadyHaveAnAccount = ({
     return (
         <Typography component="h2" className={clsx(classes.alreadyHaveAccount, elemClass)}>
             <span className={classes.alreadyHaveAccountText}>
-                {label || "Don't have an account?"}
+                {label}
             </span>
 
             <DefaultButton 

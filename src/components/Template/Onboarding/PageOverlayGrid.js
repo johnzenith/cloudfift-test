@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => {
             background: 'url(people.png)',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
+            backgroundPosition: 'right',
             objectFit: 'cover',
             opacity: 1,
         },
@@ -82,14 +83,15 @@ const useStyles = makeStyles((theme) => {
     }
 });
 
-const PageOverlayGrid = () => {
+const PageOverlayGrid = ({ paper = {}, overlay = {} }) => {
     const classes = useStyles();
 
     return (
         <Grid item xs={12} sm={12} md={6}>
             <Hidden smDown>
-                <Paper className={clsx(classes.paper, classes.brandingPaper)}>
-                    <div className={classes.overlay}></div>
+                <Paper className={clsx(classes.paper, classes.brandingPaper, paper?.className || '')}>
+                    <div className={clsx(classes.overlay, overlay?.className || '')}></div>
+                    
                     <Link to="/" className={classes.link}>
                         <LogoText className={classes.logo} />
                     </Link>

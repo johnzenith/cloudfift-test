@@ -50,6 +50,10 @@ const useStyles = makeStyles((theme) => {
             border: '1px solid #152144',
             boxShadow: 'none',
         },
+        passwordInput: {
+            letterSpacing: '5px',
+            fontWeight: 'bold',
+        },
         textFieldLabel: {
             color: '#152144'
         },
@@ -227,7 +231,7 @@ const TextInput = props => {
 
                 InputProps={{
                     classes: {
-                        root: classes.inputField,
+                        root: clsx(classes.inputField, {[classes.passwordInput]: type === 'password'}),
                         focused: classes.inputFocused,
                         // input: classes.inputField,
                     },
