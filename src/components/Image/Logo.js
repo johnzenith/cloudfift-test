@@ -1,6 +1,5 @@
 import React from 'react';
 import logo from '../../images/logo.svg';
-import clsx from 'clsx';
 
 /**
  * @props

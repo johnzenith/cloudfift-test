@@ -1,15 +1,12 @@
 import React from 'react';
 import './LoginPage.css';
 import clsx from 'clsx';
-import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
 import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 
 import Hidden from '@material-ui/core/Hidden';
@@ -87,7 +84,6 @@ const useStyles = makeStyles((theme) => {
             top: '55vh',
         },
         welcomeText: {
-            display: 'flex',
             color: '#fff',
             display: 'block',
             fontFamily: firaSansFont,
