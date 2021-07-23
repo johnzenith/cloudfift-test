@@ -1,28 +1,28 @@
 import React from 'react';
 import './LandingPage.css';
-import heroImage from '../images/hero-image.png';
-import clsx from 'clsx';
-import { Link } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import heroImage       from '../images/hero-image.png';
+import clsx            from 'clsx';
+import { Link }        from 'react-router-dom';
+import Typography      from '@material-ui/core/Typography';
+import Container       from '@material-ui/core/Container';
+import { makeStyles }  from '@material-ui/core/styles';
+import Paper           from '@material-ui/core/Paper';
+import Grid            from '@material-ui/core/Grid';
+import Button          from '@material-ui/core/Button';
+import Hidden          from '@material-ui/core/Hidden';
 
-import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
+import TextField       from '@material-ui/core/TextField';
+import Select          from '@material-ui/core/Select';
+import InputLabel      from '@material-ui/core/InputLabel';
+import FormControl     from '@material-ui/core/FormControl';
 
+import AndroidIcon           from '@material-ui/icons/Android';
+import AppleIcon             from '@material-ui/icons/Apple';
+import LanguageIcon          from '@material-ui/icons/Language';
+import GetAppIcon            from '@material-ui/icons/GetApp';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
-import AndroidIcon from '@material-ui/icons/Android';
-import AppleIcon from '@material-ui/icons/Apple';
-import LanguageIcon from '@material-ui/icons/Language';
-import GetAppIcon from '@material-ui/icons/GetApp';
 
-import Hidden from '@material-ui/core/Hidden';
-
+// Components
 import Logo          from '../components/Image/Logo';
 import RootContainer from '../components/Container/RootContainer';
 
@@ -450,7 +450,7 @@ const useStyles = makeStyles((theme) => {
             background: '#fff',
         }
     };
-  });
+});
   
 const LandingPage = () => {
     const classes = useStyles();

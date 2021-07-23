@@ -8,8 +8,11 @@ import { makeStyles } from '@material-ui/core/styles';
 // Helpers
 import validateInputField from '../../helpers/validateInputField';
 
+// Config (constant)
+import { FONT_FAMILY } from '../../config/constants';
+
 const useStyles = makeStyles((theme) => {
-    const firaSansFont = 'Fira Sans, sans-serif';
+    const firaSansFont = FONT_FAMILY.firaSans;
 
     return {
         formControl: {

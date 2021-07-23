@@ -36,9 +36,6 @@ export const useStyles = makeStyles((theme) => {
         pageActionWrapper: {
             marginTop: '90px',
         },
-        loginBtn: {
-            
-        },
         forgetPasswordGrid: {
             display: 'flex',
             justifyContent: 'flex-start',

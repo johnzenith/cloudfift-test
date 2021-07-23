@@ -6,8 +6,8 @@ export const actionTypes = {
 };
 
 export const initialState = {
-    // user: {email: 'john.zenith.me@gmail.com'},
-    user: null
+    user: {email: 'john.zenith.me@gmail.com'},
+    // user: null
 };
 
 /**
