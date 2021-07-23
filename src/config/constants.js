@@ -4,6 +4,7 @@ export const FONT_FAMILY = {
 
 export const DASHBOARD_DRAWER = {
     width: 294,
+    height: 85,
     listItems: {
         'overview': {
             icon:  {

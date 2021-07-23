@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '63px',
         marginTop: '21px',
     },
+    spaceBar: {
+        marginTop: '90px',
+    },
     icon: {
         display: 'block',
         marginLeft: '30px',
@@ -51,12 +54,16 @@ const useStyles = makeStyles((theme) => ({
     listItem: {
         marginBottom: '22px',
     },
+    listItemActive: {
+        marginBottom: '32px',
+    },
     listItemIcon: {
         width: '80px',
+        marginLeft: '5px',
     },
     listItemText: {
         fontFamily: firaSansFont,
-        fontWeight: 500,
+        fontWeight: 400,
         fontSize: '14px',
         lineHeight: '17px',
         color: '#fff',
@@ -115,13 +122,22 @@ const Drawer = ({
     return (
         <div className={drawerClasses.root}>
             {showLogo ? <Logo className={classes.logo} /> : ''}
-            <div className={classes.toolbar} />          
+            <div className={classes.spaceBar} />          
             <List className={drawerClasses.list}>
                 {listItemsKeys.map((key, index) => {
-                    const listData = getListItemData(key, index);
+                    const listData         = getListItemData(key, index);
+                    const isListItemActive = selectedListItem === index;
 
                     return (
-                        <ListItem button key={key} className={clsx(classes.listItem, drawerClasses.listItem)}>
+                        <ListItem 
+                            button 
+                            key={key} 
+                            className={clsx(
+                                classes.listItem,
+                                drawerClasses.listItem,
+                                {[classes.listItemActive]: isListItemActive},
+                            )}
+                        >
                             <ListItemIcon className={clsx(classes.listItemIcon, drawerClasses.listItemIcon)}>
                                 {listData.icon}
                             </ListItemIcon>
@@ -131,7 +147,7 @@ const Drawer = ({
                                     primary: clsx(
                                         classes.listItemText,
                                         drawerClasses.listItemText,
-                                        {[classes.listItemTextActive]: (selectedListItem === index)}
+                                        {[classes.listItemTextActive]: isListItemActive}
                                     )
                                 }}
                             />

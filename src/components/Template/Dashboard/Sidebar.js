@@ -30,10 +30,6 @@ const useStyles = makeStyles((theme) => ({
         width: drawerWidth,
         background: '#152144',
     },
-    logo: {
-        marginLeft: '63px',
-        marginTop: '21px',
-    }
 }));
 
 const Sidebar = props => {

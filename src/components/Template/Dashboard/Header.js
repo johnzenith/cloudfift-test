@@ -1,18 +1,43 @@
 import React          from 'react';
+import clsx           from 'clsx';
 import AppBar         from '@material-ui/core/AppBar';
 import IconButton     from '@material-ui/core/IconButton';
 import MenuIcon       from '@material-ui/icons/Menu';
 import Toolbar        from '@material-ui/core/Toolbar';
 import Typography     from '@material-ui/core/Typography';
+// import Paper          from '@material-ui/core/Paper';
+import Grid           from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
 // Constants
+import { FONT_FAMILY }      from '../../../config/constants';
 import { DASHBOARD_DRAWER } from '../../../config/constants';
 
-const drawerWidth = DASHBOARD_DRAWER.width;
+// Components
+import PrimaryButton from '../../Button/PrimaryButton';
+
+const drawerWidth  = DASHBOARD_DRAWER.width;
+const drawerHeight = DASHBOARD_DRAWER.height;
+const firaSansFont = FONT_FAMILY.firaSans;
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
+        display: 'flex',
+        justifyContent: 'center',
+        background: '#fff',
+        height: `${drawerHeight}px`,
+
+        '&::after': {
+            content: '" "',
+            display: 'block',
+            width: '100vw',
+            marginTop: '20px',
+            marginLeft: '40px',
+            height: '0px',
+            opacity: 0.2,
+            borderBottom: '1.8px solid #B2B7BC',
+        },
+
         [theme.breakpoints.up('sm')]: {
             width: `calc(100% - ${drawerWidth}px)`,
             marginLeft: drawerWidth,
@@ -24,13 +49,54 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             display: 'none',
         },
+    },
+    completeAccountBtn: {
+        width: 'auto',
+        height: 'auto',
+        // marginTop: '26px',
+        boxShadow: 'none',
+        borderRadius: '55px',
+        padding: '8px 45px',
+        fontFamily: firaSansFont,
+        fontSize: '14px',
+        // lineHeight: '0px',
+        fontWeight: 'normal',
+        display: 'flex',
+        alignItems: 'center',
+        background: '#F9A825',
+        color: '#fff',
+        textTransform: 'lowercase',
+    },
+    alertContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        height: `${drawerHeight}px`,
+        marginTop: '20px',
+        padding: '0px 30px',
+    },
+    avatarWrapper: {
+        justifyContent: 'flex-end',
+    },
+    avatar: {
+        marginRight: '15px',
+    },
+    fullName: {
+        color: '#152144',
+        fontFamily: 'Quicksand, sans-serif',
+        fontSize: '14px',
+        fontWeight: 500,
+        lineHeight: '17px',
+        cursor: 'pointer',
+    },
+    arrowDown: {
+        marginLeft: '5px',
     }
 }));
 
 const Header = props => {
     const classes = useStyles();
     const {
-        label = 'label',
         handleDrawerToggle = (() => {}),
     } = props;
 
@@ -46,9 +112,26 @@ const Header = props => {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" noWrap>
-                    {label}
-                </Typography>
+                
+                <Grid container spacing={0}>
+                    <Grid item xs={8}>
+                        <div className={classes.alertContainer}>
+                            <PrimaryButton
+                                label='Hi Andie! you are yet to complete your account setup'
+                                className={classes.completeAccountBtn}
+                            />               
+                        </div>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <div className={clsx(classes.alertContainer, classes.avatarWrapper)}>
+                            <img src="user.png" className={classes.avatar} alt="avatar" />
+                            <Typography component="h4" className={classes.fullName}>
+                                Andie Kane
+                                <img src="arrow-down.svg" alt="arrow-down" className={classes.arrowDown} />
+                            </Typography>
+                        </div>
+                    </Grid>
+                </Grid>
             </Toolbar>
         </AppBar>
     );

@@ -4,12 +4,16 @@ import {
     makeStyles
 } from '@material-ui/core/styles';
 
+// Constants
+import { DASHBOARD_DRAWER } from '../../config/constants';
+
 // Components
 import Header  from '../../components/Template/Dashboard/Header';
 import Drawer  from '../../components/Template/Dashboard/Drawer';
 import Sidebar from '../../components/Template/Dashboard/Sidebar';
 
-const drawerWidth = 240;
+const drawerWidth  = DASHBOARD_DRAWER.width;
+const drawerHeight = DASHBOARD_DRAWER.height;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -24,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         flexGrow: 1,
+        marginTop: `${drawerHeight}px`,
         padding: theme.spacing(3),
     },
 }));
@@ -51,7 +56,6 @@ function DashboardPage(props) {
             />
             
             <main className={classes.content}>
-                <div className={classes.toolbar} />
                 <Typography paragraph>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                 </Typography>
