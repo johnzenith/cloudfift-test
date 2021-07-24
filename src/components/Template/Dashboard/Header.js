@@ -1,17 +1,19 @@
 import React          from 'react';
 import clsx           from 'clsx';
 import AppBar         from '@material-ui/core/AppBar';
+import Hidden         from '@material-ui/core/Hidden';
 import IconButton     from '@material-ui/core/IconButton';
 import MenuIcon       from '@material-ui/icons/Menu';
 import Toolbar        from '@material-ui/core/Toolbar';
 import Typography     from '@material-ui/core/Typography';
-// import Paper          from '@material-ui/core/Paper';
 import Grid           from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
 // Constants
-import { FONT_FAMILY }      from '../../../config/constants';
-import { DASHBOARD_DRAWER } from '../../../config/constants';
+import {
+    FONT_FAMILY,
+    DASHBOARD_DRAWER
+} from '../../../config/constants';
 
 // Components
 import PrimaryButton from '../../Button/PrimaryButton';
@@ -36,17 +38,23 @@ const useStyles = makeStyles((theme) => ({
             height: '0px',
             opacity: 0.2,
             borderBottom: '1.8px solid #B2B7BC',
+
+            [theme.breakpoints.down('md')]: {
+                marginLeft: '0px',
+            }
         },
 
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             width: `calc(100% - ${drawerWidth}px)`,
             marginLeft: drawerWidth,
         },
     },
     menuButton: {
+        marginTop: '20px',
         marginRight: theme.spacing(2),
+        color: '#152144',
 
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             display: 'none',
         },
     },
@@ -66,6 +74,15 @@ const useStyles = makeStyles((theme) => ({
         background: '#F9A825',
         color: '#fff',
         textTransform: 'lowercase',
+
+        [theme.breakpoints.only('md')]: {
+            padding: '8px 12px',
+        },
+
+        '&:hover': {
+            background: '#F9A825',
+            color: '#fff',
+        }
     },
     alertContainer: {
         display: 'flex',
@@ -94,6 +111,17 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+export const AccountSetupActionBtn = props => {
+    const classes = useStyles();
+
+    return (
+        <PrimaryButton
+            label='Hi Andie! you are yet to complete your account setup'
+            className={clsx(classes.completeAccountBtn, props?.className || '')}
+        />
+    );
+};
+
 const Header = props => {
     const classes = useStyles();
     const {
@@ -116,10 +144,9 @@ const Header = props => {
                 <Grid container spacing={0}>
                     <Grid item xs={8}>
                         <div className={classes.alertContainer}>
-                            <PrimaryButton
-                                label='Hi Andie! you are yet to complete your account setup'
-                                className={classes.completeAccountBtn}
-                            />               
+                            <Hidden smDown>
+                                <AccountSetupActionBtn />          
+                            </Hidden>
                         </div>
                     </Grid>
                     <Grid item xs={4}>

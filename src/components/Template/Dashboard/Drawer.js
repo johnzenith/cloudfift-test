@@ -8,27 +8,18 @@ import ListItemText   from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 
 // Constants
-import { FONT_FAMILY }      from '../../../config/constants';
-import { DASHBOARD_DRAWER } from '../../../config/constants';
+import { 
+    FONT_FAMILY,
+    DASHBOARD_DRAWER
+} from '../../../config/constants';
 
 // Components
 import Logo         from '../../Image/Logo';
 import objectHelper from '../../../helpers/objectHelper';
 
-const drawerWidth  = DASHBOARD_DRAWER.width;
 const firaSansFont = FONT_FAMILY.firaSans;
 
 const useStyles = makeStyles((theme) => ({
-    drawer: {
-        [theme.breakpoints.up('sm')]: {
-            width: drawerWidth,
-            flexShrink: 0,
-        },
-    },
-
-    // necessary for content to be below app bar
-    toolbar: theme.mixins.toolbar,
-
     logo: {
         marginLeft: '63px',
         marginTop: '21px',

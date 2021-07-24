@@ -2,6 +2,10 @@ export const FONT_FAMILY = {
     firaSans: 'Fira Sans, sans-serif',
 };
 
+export const CURRENCY_SYMBOLS = {
+    naira: '₦',
+};
+
 export const DASHBOARD_DRAWER = {
     width: 294,
     height: 85,
