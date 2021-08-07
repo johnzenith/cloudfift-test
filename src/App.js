@@ -1,13 +1,16 @@
 import React from 'react';
 import './App.css';
-import { useStateValue } from './context/StateProvider';
-import SignUpForm from './components/form/SignUpForm';
-import LoginForm from './components/form/LoginForm';
-import HomeScreen from './page/HomeScreen';
-import Dashboard from './page/Dashboard';
-import ForgotPasswordForm from './components/form/ForgotPasswordForm';
+import { useStateValue }  from './context/StateProvider';
 
-import { 
+import LandingPage        from './page/LandingPage';
+
+import LoginPage          from './page/onboarding/LoginPage';
+import SignupPage         from './page/onboarding/SignupPage';
+import ForgotPasswordPage from './page/onboarding/ForgotPasswordPage';
+
+import Dashboard          from './page/dashboard';
+
+import {
     BrowserRouter as Router, 
     Switch, 
     Route,
@@ -17,31 +20,32 @@ import {
 function App() {
     const [{ user }] = useStateValue();
 
-    const DisplayUserForm = () => (
-        <Switch>
-            <Route exact path="/forgot-password" component={ForgotPasswordForm} />
-            <Route exact path="/signup"          component={SignUpForm} />
-            <Route exact path="/login"           component={LoginForm} />
-            <Route exact path="/"                component={HomeScreen} />
-            <Route
-                render={() => <Redirect to="/" />}
-              />
-        </Switch>
-    );
+    const GlobalRoutes = () => {
+        return (
+            <Switch>
+                <Route exact path="/forgot-password" component={ForgotPasswordPage} />
+                <Route exact path="/signup"          component={SignupPage} />
+                <Route exact path="/login"           component={LoginPage} />
+                <Route exact path="/"                component={LandingPage} />
+                <Route
+                    render={() => <Redirect to="/" />}
+                />
+            </Switch>
+        );
+    };
 
     return (
         <div className="app">
             <Router>
                 {!user ? 
-                    (<DisplayUserForm />)
+                    <GlobalRoutes />
                     : 
-                    (<div className="app__dashboard">
-                        <Switch>
-                            <Route path="/dashboard" component={Dashboard} />
-
-                            <Route render={() => <Redirect to="/dashboard" />} />
-                        </Switch>
-                    </div>)
+                    (<Switch>
+                        <Route exact path="/dashboard" component={Dashboard} />
+                        <Route 
+                            render={() => <Redirect to="/dashboard" />}
+                        />
+                    </Switch>)
                 }
             </Router>
         </div>
